@@ -27,7 +27,7 @@ because every part is managed, documented and cheap at zero users:
 | --- | --- | --- |
 | web app | Next.js (App Router) + TypeScript | Remix, SvelteKit, Rails |
 | styling | Tailwind, tokens from replica-design | CSS modules |
-| mobile | Expo (React Native) | SwiftUI, Kotlin |
+| mobile | Expo + React Native + TypeScript + Expo Router | SwiftUI, Kotlin |
 | database | Postgres on Supabase or Neon | PlanetScale, SQLite (Turso) |
 | ORM | Drizzle or Prisma | raw SQL |
 | auth | Supabase Auth or Auth.js | Clerk |
@@ -40,6 +40,19 @@ because every part is managed, documented and cheap at zero users:
 Write each choice with one line of why. One database. No microservices. The
 clone does not need the original's architecture, it needs the original's
 features.
+
+For a new mobile clone, default to an Expo development build, not Expo Go as
+the long-term runtime. Add `expo-dev-client`, keep native configuration in
+app config, and define `development`, `preview`, `e2e`, and `production`
+profiles in `eas.json`. The e2e profile produces an iOS simulator build and
+an Android APK. Use `npx expo run:ios` and `npx expo run:android` for local
+native builds; rebuild after native dependency or app-config changes.
+
+Copy the decisions from `replica/mobile.md` into the architecture: app
+scheme, iOS bundle identifier, Android package, minimum OS versions, device
+matrix, native modules, permissions, universal/app links, notification
+routing, offline/cache policy, and upgrade strategy. If either platform is
+out of scope, say so explicitly.
 
 ## Step 2: the schema
 
@@ -98,6 +111,11 @@ Write a line on each that applies: time zones and daylight saving, idempotency
 (webhooks arrive twice), race conditions, rate limits, file size limits,
 search, realtime, offline, email deliverability, multi-tenancy, GDPR deletion.
 
+For mobile also decide: secure token storage, refresh after app resume,
+background task limits, offline writes and conflict resolution, push-token
+rotation, deep-link validation, app-version/API compatibility, keyboard and
+safe-area ownership, and what requires a custom native module.
+
 ## Step 5: build order
 
 1. **Vertical slice.** The core loop end to end, ugly: sign up, do the one
@@ -107,6 +125,10 @@ search, realtime, offline, email deliverability, multi-tenancy, GDPR deletion.
 4. **The fixes** replica-entrepreneur finds, once it has run.
 
 Each milestone lists its screens (S-IDs), tables and routes.
+
+For mobile, every milestone also lists its iOS and Android acceptance device,
+Maestro flow IDs, and required screenshots. The core vertical slice is not
+complete until it builds and runs on both required platforms.
 
 ## Output
 

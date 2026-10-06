@@ -87,6 +87,18 @@ Connect and Play Console when you upload, they change), privacy labels and
 the data safety form, privacy policy and support URLs, age rating, and review
 notes with a demo account the reviewer can use.
 
+Build a platform-specific store pack under `replica/launch/store/ios/` and
+`replica/launch/store/android/`: final listing text, ordered screenshot plan,
+captions, icon references, privacy/data-safety answers with source evidence,
+review notes, test account instructions, deep-link test case, and release
+notes. Generate screenshots from the branded production-like build on the
+required device profiles; never submit simulator chrome, debug menus, seed
+labels, another app's assets, or a screenshot borrowed from the original.
+
+Check the live App Store Connect and Play Console requirements immediately
+before export because accepted sizes, declarations and policy questions can
+change. Record the date and URLs used in `launch-plan.md`.
+
 ## Step 4: launch plan
 
 `launch-plan.md`: a waitlist or beta list before launch, analytics and error
@@ -96,7 +108,7 @@ leads with the fix, and the first 10 users to talk to by hand.
 
 ## Output
 
-`replica/launch/` complete, the landing page built, `listing.py` passing.
-Next: `$replica-deploy`.
+`replica/launch/` complete, platform store packs present, the landing page
+built, and `listing.py` passing. Next: `$replica-deploy`.
 
 Source attribution: [references/origin.md](references/origin.md).

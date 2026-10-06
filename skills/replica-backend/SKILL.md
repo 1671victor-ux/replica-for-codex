@@ -31,7 +31,10 @@ Reads `replica/architecture.md`. Writes migrations and server code, and keeps
 
 - Email sign up with verification, password reset, magic link if the original
   has it. OAuth (Google, Apple) with the user's own developer apps.
-- Sessions: http-only secure cookies. Sign out everywhere.
+- Web sessions use http-only secure cookies. Native sessions use the auth
+  provider's supported mobile flow, keep refresh credentials only in OS-backed
+  secure storage, and never place secrets in AsyncStorage or the JS bundle.
+  Sign out everywhere.
 - Roles and teams if the recon map has them: owner, admin, member, with one
   function that answers "can this user do this to this record".
 - Account deletion that actually deletes. Apple requires it for apps with
@@ -73,6 +76,21 @@ scopes needed (fewest possible), the provider's review process, rate limits.
 Google scopes like Calendar need Google's OAuth verification before public
 launch, which takes weeks. Start it early and write that in `backend.md`.
 
+## Mobile boundary
+
+- Register separate development, preview, and production redirect URLs for
+  the app scheme and universal/app links. Validate the callback state and
+  never trust arbitrary redirect targets.
+- Make mutations idempotent so an offline queue or retry after app resume
+  cannot create duplicates. Document cache freshness and conflict behavior.
+- Store push tokens per installation, handle rotation and logout, and route
+  notification payloads only to declared screens. Do not include sensitive
+  content unless the user explicitly chose it.
+- Version the API or enforce a minimum supported app version before removing
+  fields used by released clients.
+- Test permissions, expired tokens, revoked OAuth grants, offline replay and
+  a second user's isolation on both required platforms.
+
 ## Security checklist
 
 - [ ] secrets only in env vars, `.env*` in `.gitignore`, nothing in client bundles
@@ -82,6 +100,9 @@ launch, which takes weeks. Start it early and write that in `backend.md`.
 - [ ] webhooks verify signatures
 - [ ] uploads: size and type limits, served from a separate domain or bucket
 - [ ] no user data in URLs or logs
+- [ ] native refresh tokens use OS-backed secure storage; none in AsyncStorage
+- [ ] deep-link callbacks and push routes are allowlisted and validated
+- [ ] offline/retried writes are idempotent
 - [ ] dependencies audited (`npm audit`)
 - [ ] privacy policy lists every processor (Stripe, Resend, host, analytics)
 
@@ -89,6 +110,7 @@ launch, which takes weeks. Start it early and write that in `backend.md`.
 
 Working auth, database, payments in test mode, email and the integrations,
 `.env.example`, `replica/backend.md` with the checklist ticked, feature
-matrix rows updated. Next: `$replica-test`.
+matrix rows updated. Next: return to `$replica-build` to replace the fake data
+layer and run the native build/capture loop.
 
 Source attribution: [references/origin.md](references/origin.md).

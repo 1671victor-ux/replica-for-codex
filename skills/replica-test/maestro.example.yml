@@ -1,0 +1,14 @@
+appId: com.example.replica
+name: F01 core value flow
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Welcome"
+- tapOn:
+    id: "auth.email"
+- inputText: "demo@example.com"
+- tapOn:
+    id: "auth.continue"
+- assertVisible:
+    id: "home.screen"
+- takeScreenshot: "F01-complete"

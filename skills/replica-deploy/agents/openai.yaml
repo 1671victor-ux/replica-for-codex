@@ -1,4 +1,4 @@
 interface:
   display_name: "Replica Deploy"
-  short_description: "Gate and ship an approved production release"
-  default_prompt: "Use $replica-deploy to run preflight and prepare an explicitly approved production release."
+  short_description: "Gate and ship approved mobile releases"
+  default_prompt: "Use $replica-deploy to run iOS/Android preflight and prepare explicitly approved store releases."

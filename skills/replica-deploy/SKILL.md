@@ -46,6 +46,17 @@ yours.
 
 Any failure stops the deploy. Say which and why.
 
+For Expo/React Native add these hard gates for every required platform:
+
+- the mobile environment doctor passes;
+- the production-like native build installs and launches;
+- all core Maestro flows pass on the named simulator/emulator;
+- the current screenshot/diff set has no missing platform/device/state pair;
+- permissions, deep links, offline recovery, background/resume, account
+  deletion, privacy disclosures and branded system surfaces were verified;
+- version/build numbers, bundle/package IDs, signing owner and EAS project are
+  the intended production targets.
+
 ## Step 2: production services
 
 - A **separate production project** for the database (never the dev one),
@@ -91,10 +102,15 @@ flow on the live site yourself, and ask the user to do it on their phone.
 
 ## Step 5: mobile, if there is an app
 
-Expo: `eas build` then `eas submit` to TestFlight and Play internal testing.
+Expo: use explicit production profiles with `eas build --platform ios` and
+`eas build --platform android`, then submit the exact successful build to
+TestFlight and Play internal testing. Do not use ambiguous "latest" artifacts.
 Native: archive in Xcode, upload to App Store Connect; Gradle bundle to Play
 Console. The user owns the developer accounts ($99 a year for Apple, $25 once
 for Google). Beta first, then review with the listing from replica-launch.
+Run a real-device smoke pass from each beta channel before requesting store
+review; simulator/emulator results alone do not verify signing, push,
+associated domains, purchases, camera, notifications or release distribution.
 Submitting builds, changing DNS, enabling live Stripe, and deploying production
 are external mutations: show the exact target and preflight result, then obtain
 the user's explicit approval immediately before each action.

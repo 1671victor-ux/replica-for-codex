@@ -1,4 +1,4 @@
 interface:
   display_name: "Replica Architect"
-  short_description: "Plan stack, schema, API, and build order"
+  short_description: "Plan Expo stack, schema, API, and build order"
   default_prompt: "Use $replica-architect to turn the Replica recon artifacts into an implementation architecture."

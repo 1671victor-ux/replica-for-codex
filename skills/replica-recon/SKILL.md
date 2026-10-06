@@ -20,8 +20,11 @@ Output goes in the user's project:
 ```
 replica/recon.md        the recon map (template: recon-map.md in this folder)
 replica/features.csv    the feature matrix (template: features.csv in this folder)
+replica/mobile.md       mobile platform contract, when iOS or Android is in scope
 replica/screens/        reference screenshots of the original. Never shipped.
 ```
+
+Start mobile work from `mobile.example.md` in this skill folder.
 
 ## The rules, before anything else
 
@@ -49,7 +52,9 @@ anything the app owns.
 
 Ask three things, or propose answers and get a yes:
 
-1. **Which app, which platform.** Web, iOS, Android, desktop.
+1. **Which app, which platform.** Web, iOS, Android, desktop. For mobile,
+   record whether parity is required on iOS, Android, or both, and the exact
+   reference device class and OS version used for each platform.
 2. **Which slice.** "All of Notion" is not a project. "Notion's pages, blocks
    and sharing" is. Default to the core loop: the one flow users pay for.
 3. **Who it is for.** The user's own business, a niche, a product to sell.
@@ -77,6 +82,19 @@ One row per screen. IDs are stable: S01, S02... Every other file refers to them.
 
 States matter: empty, loading, filled, error, permission denied, mobile. An
 empty state you did not record is an empty state you will not build.
+
+For a mobile target also record, per screen: navigation pattern and back
+behavior, safe-area treatment, status/navigation bars, orientation, keyboard
+behavior, gestures, system sheets, native controls, permissions, deep links,
+offline/reconnect behavior, notification entry points, and platform-specific
+differences. Do not flatten iOS and Android differences into one vague row.
+
+Save reference images with stable coordinates in the path, for example:
+
+```text
+replica/screens/ios/iphone-15/S07/filled.png
+replica/screens/android/pixel-8/S07/filled.png
+```
 
 ## Step 4: user flows
 
@@ -128,9 +146,19 @@ Screens, flows, entities, and the hard parts (realtime, sync, payments,
 calendar or email integrations, offline). Give a size: S (a weekend), M (a
 few weeks), L (a quarter), XL (rescope it). No promises of a perfect clone.
 
+## Mobile contract
+
+When mobile is in scope, write `replica/mobile.md` before handoff. It must
+name: required platforms; reference device/OS pairs; orientation; bundle ID
+and Android package placeholders; deep-link scheme and tested URLs; required
+permissions and denial behavior; push-notification entry points; offline
+expectations; and the screenshot path convention above. Mark every unknown
+with its evidence gap instead of guessing.
+
 ## Output
 
-`replica/recon.md` and `replica/features.csv`, then a five-line summary: the
+`replica/recon.md`, `replica/features.csv`, and `replica/mobile.md` when
+applicable, then a five-line summary: the
 core loop, screen and flow counts, the three hardest parts, what is out of
 scope, and the next step: `$replica-architect`.
 

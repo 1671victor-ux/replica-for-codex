@@ -1,4 +1,4 @@
 interface:
   display_name: "Replica Diff"
-  short_description: "Score feature and layout parity honestly"
-  default_prompt: "Use $replica-diff to measure feature and layout parity from the Replica artifacts."
+  short_description: "Diff feature and mobile layout parity"
+  default_prompt: "Use $replica-diff to compare matching iOS and Android screen states and score feature parity."

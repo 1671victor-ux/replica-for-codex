@@ -79,7 +79,8 @@ model):
 - mark type: wordmark, symbol plus wordmark, or monogram
 - must work at 16px (favicon) and as a 1024px app icon
 - deliverables: SVG, app icon 1024x1024 with no transparency for iOS,
-  favicon set, social image 1200x630
+  Android adaptive icon foreground/background/monochrome layers, splash and
+  notification icon, favicon set, social image 1200x630
 - **must not resemble the original's mark**: no shared shape, colour pair or
   letterform trick. Put the original's logo next to the drafts and check.
 
@@ -103,6 +104,13 @@ identifiers like `CalendlyEmbed`), domains and colours, skipping
 `node_modules`, build output and the `replica/` planning folder. Exit 1 means
 something is left. Fix until it says clean. Also check by eye: the favicon,
 the page titles, the email templates, the OG image, the app icon.
+
+For Expo/React Native also replace and inspect `name`, `slug`, `scheme`, iOS
+bundle identifier and display name, Android package and label, adaptive icon,
+splash assets, notification icon/channel wording, permission-purpose strings,
+deep-link hosts, and store-facing developer/support names. Rebuild both native
+apps after changing bundled assets or app config, then visually inspect the
+launcher, splash, permission prompts and system share surfaces.
 
 ## Output
 

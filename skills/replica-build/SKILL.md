@@ -15,6 +15,10 @@ Reads `replica/recon.md`, `replica/architecture.md`, `replica/design/`.
 Updates `replica/features.csv` (the `clone` column) and keeps
 `replica/build-log.md`.
 
+For a mobile project also read `replica/mobile.md`. Treat Expo/React Native as
+the product runtime, not as a web preview: build and inspect native iOS and
+Android surfaces throughout the work.
+
 ## The rules
 
 - **Clean room.** Every line of code is written here, from the recon map and
@@ -53,11 +57,12 @@ Work in the order of `architecture.md`. For each screen:
 4. **Every state**: empty, loading (skeletons, not spinners, if the original
    does), filled, error, no permission, long content (a 60 character name),
    mobile width.
-5. Basics, every time: semantic HTML, labels on inputs, keyboard reachable,
-   visible focus, images with alt text.
+5. Basics, every time: semantic HTML and keyboard support on web; accessible
+   names, roles, font scaling, touch targets, keyboard avoidance and stable
+   `testID` values on React Native.
 6. Set the matching rows in `features.csv` to `yes` or `partial` (with a note).
-7. Screenshot it at the same viewport as the reference into
-   `replica/clone-screens/S07.png` for replica-diff.
+7. Screenshot it in the same platform/device/state as the reference. Mobile
+   output uses `replica/clone-screens/{ios|android}/{device}/S07/{state}.png`.
 8. If the user requested commits or the repository instructions require them,
    make one commit per screen: `build: S07 booking page`. Otherwise keep the
    same screen-sized change boundary and record it in the build log.
@@ -65,12 +70,32 @@ Work in the order of `architecture.md`. For each screen:
 ## Definition of done, per screen
 
 - [ ] every state from the recon map, plus empty, error and loading
-- [ ] works at 390px and 1440px wide
-- [ ] keyboard only: can complete the flow
+- [ ] web: works at 390px and 1440px; mobile: required iOS and Android devices
+- [ ] web keyboard flow or mobile screen-reader/touch/keyboard behavior works
 - [ ] no console errors
 - [ ] no hard-coded copy borrowed from the original
 - [ ] features.csv updated
 - [ ] screenshot saved for diff
+
+## Native device loop
+
+For every mobile screen and every core-flow change:
+
+1. Run the project's checks, then build or start its Expo development build.
+2. Launch the exact iOS simulator and Android emulator named in
+   `replica/mobile.md` (`npx expo run:ios` / `npx expo run:android` when a
+   native rebuild is needed; otherwise `npx expo start` and open the existing
+   development build).
+3. Seed a deterministic account and navigate to the recorded state. Prefer
+   stable deep links and test IDs over coordinate taps.
+4. Capture both platform screenshots at the contract paths and run
+   `$replica-diff`.
+5. Fix material layout or behavior gaps, recapture, and repeat until the
+   screen meets the parity verdict. Then run its Maestro smoke flow.
+
+If a required simulator, SDK, or device-control tool is unavailable, report
+the exact missing prerequisite and leave that platform unverified. A web
+render is not proof that a native screen works.
 
 ## Step 4: the build log
 

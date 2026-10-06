@@ -13,8 +13,9 @@ description: >-
 # replica-design
 
 Reads `replica/recon.md` and the screenshots in `replica/screens/`. Writes
-`replica/design/tokens.json` (template in this folder), `tokens.css`, the
-Tailwind mapping, and `replica/design/components.md`.
+`replica/design/tokens.json` (template in this folder), the platform token
+mapping (`tokens.ts` for React Native; `tokens.css` and Tailwind for web), and
+`replica/design/components.md`.
 
 Resolve the bundled checker from the loaded skill directory (default global
 path shown below):
@@ -53,11 +54,22 @@ From the screenshots (zoom in, use a colour picker on the user's machine):
 - **Radius, shadow, motion**: two or three of each.
 - **Layout**: max content width, grid, breakpoints, sidebar width, header height.
 
+For mobile, measure safe-area insets separately from design spacing. Record
+status/navigation bar treatment, keyboard avoidance, bottom-tab height,
+sheet behavior, swipe/back gestures, portrait/landscape support, Dynamic Type
+or font scaling, and iOS/Android differences. Do not encode a screenshot's
+status-bar pixels into a component.
+
 ## Step 2: write the tokens
 
 Fill `tokens.json`. Keep the role names. replica-brand only changes values.
 Generate `tokens.css` as custom properties and map them into Tailwind's theme
 so components use `bg-surface text-muted`, never raw hex.
+
+For React Native, generate typed `tokens.ts` from the same role names. Use
+responsive layout and platform APIs where behavior truly differs; do not
+fork entire screens just to tune spacing. Include dark mode and reduced-motion
+tokens when either appears in recon or is required by the target audience.
 
 Add a `pairs` list for every text and background combination the app uses,
 then:
@@ -88,17 +100,25 @@ Every state the recon saw, plus the ones it should have: focus, disabled,
 loading, error, empty. Keyboard and screen reader behaviour is part of the
 spec.
 
+Mobile component specs must include `accessibilityRole`, accessible name,
+focus order, minimum touch target, font-scaling behavior, keyboard type and
+return action for inputs, safe-area ownership, test ID, and any distinct iOS
+or Android interaction. Prefer React Native primitives and accessible Expo
+libraries over DOM-oriented component kits.
+
 ## Step 4: build the primitives
 
-Build the components in code once, in isolation (a `/design` route or
-Storybook), before any screen. Use an accessible base if the stack has one
-(Radix, shadcn/ui, React Aria). Screenshot the page. That is the design system
-check.
+Build the components in code once, in isolation (a `/design` route, Storybook,
+or an Expo development-only component gallery), before any screen. On web use
+an accessible base when appropriate. On mobile render the gallery on one iOS
+simulator and one Android emulator and capture both; platform rendering is
+part of the design-system check.
 
 ## Output
 
-`tokens.json`, `tokens.css`, the Tailwind config, `components.md`, the
-primitives built, and a contrast report with zero AA failures. Next:
+`tokens.json`, the relevant web and/or React Native token mappings,
+`components.md`, the primitives built, paired platform screenshots when
+mobile applies, and a contrast report with zero AA failures. Next:
 `$replica-build`.
 
 Source attribution: [references/origin.md](references/origin.md).

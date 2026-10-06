@@ -56,9 +56,10 @@ Aim for 100+ reviews across at least three sources, recent first:
 | the original's own board | its public roadmap or feature-request board (Canny and similar) and the vote counts |
 | its changelog | what it shipped, so you do not "fix" what is already fixed |
 
-Each row in `replica/reviews.csv`: `source,url,date,rating,text`, text copied
-exactly. Read the 3 and 4 star reviews too. "Love it, but..." is where the
-best fixes hide.
+Each row in `replica/reviews.csv`:
+`source,url,date,rating,platform,app_version,text`, text copied exactly.
+Record `ios`, `android`, `web`, or `unknown` without guessing. Read the 3 and
+4 star reviews too. "Love it, but..." is where the best fixes hide.
 
 ## Step 2: rank
 
@@ -91,6 +92,12 @@ Pick the top 5 to 8 by evidence times how cheaply you can fix them. For each:
 what to build or change, size (S, M, L), which skill does it, and the
 evidence. Add each one to `replica/features.csv` as a row with `original` set
 to `no`. Pricing and billing complaints go to `$replica-launch`.
+
+For mobile complaints, preserve the platform and app-version split. A crash,
+keyboard bug, battery issue or missing system integration on one platform is
+not evidence about the other. Route verified UX fixes back through the
+build → simulator → screenshot → diff → E2E loop before positioning them as
+advantages.
 
 ## Step 5: the angle
 

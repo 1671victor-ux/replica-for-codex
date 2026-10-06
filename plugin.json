@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "replica-for-codex",
-  "version": "0.1.0",
-  "description": "Eleven Codex-native skills for clean-room app research, rebuilding, testing, differentiation, launch, and deployment.",
+  "version": "0.2.0",
+  "description": "Eleven Codex-native skills for a clean-room React Native/Expo mobile replication pipeline with iOS and Android verification.",
   "author": {
     "name": "1671victor-ux",
     "url": "https://github.com/1671victor-ux"
@@ -15,15 +15,16 @@
     "com.openai": {
       "interface": {
         "displayName": "Replica for Codex",
-        "shortDescription": "Clean-room app research and build pipeline",
-        "longDescription": "Eleven coordinated Codex skills that map an existing product, plan and build an original implementation, test parity, research user pain, rebrand, launch, and deploy it.",
+        "shortDescription": "Expo replica pipeline for iOS and Android",
+        "longDescription": "Eleven coordinated Codex skills that map an app, build a clean-room React Native/Expo implementation, run and capture it on iOS and Android, diff and fix it, execute reproducible E2E tests, differentiate, brand, prepare store assets, and deploy.",
         "developerName": "1671victor-ux",
         "category": "Developer Tools",
         "capabilities": ["Read", "Write"],
         "websiteURL": "https://github.com/1671victor-ux/replica-for-codex",
         "defaultPrompt": [
           "Use $replica-recon to map an app from public sources and my own authorized account.",
-          "Continue the Replica for Codex pipeline from the artifacts already present in replica/."
+          "Continue the Replica for Codex mobile pipeline from the artifacts already present in replica/.",
+          "Run the Expo clone on iOS and Android, capture matching states, diff, fix, and rerun the Maestro flows."
         ],
         "brandColor": "#10A37F"
       }

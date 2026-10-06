@@ -4,21 +4,24 @@ description: >-
   Compares an app clone against the original: a feature parity score from the
   feature matrix (weighted by must, should, could) with the missing list in
   build order, plus a screenshot layout diff that ignores colour so a rebrand
-  does not count against you. Two standard-library Python tools. Use when the
+  does not count against you. Captures from iOS Simulator and Android devices
+  and compares every platform/device/state pair. Use when the
   user says "how close is my clone", "compare it to the original", "what's
   missing", "parity check", "diff the screens", "is it ready", or after
-  $replica-test.
+  $replica-build captures the native screens.
 ---
 
 # replica-diff
 
-Two tools in this folder, both standard-library Python, no installs:
+Three tools in this folder, all standard-library Python, no Python installs:
 
 ```bash
 python3 ~/.codex/skills/replica-diff/parity.py replica/features.csv
 python3 ~/.codex/skills/replica-diff/imgdiff.py replica/screens/S07.png replica/clone-screens/S07.png --out diff-S07.png
 python3 ~/.codex/skills/replica-diff/imgdiff.py a.png b.png --json > replica/diffs/S07.json
 python3 ~/.codex/skills/replica-diff/parity.py replica/features.csv --visual replica/diffs/*.json --markdown > replica/parity.md
+python3 ~/.codex/skills/replica-diff/mobile_capture.py ios replica/clone-screens/ios/iphone-15/S07/filled.png
+python3 ~/.codex/skills/replica-diff/mobile_capture.py android replica/clone-screens/android/pixel-8/S07/filled.png
 ```
 
 ## What parity means here
@@ -47,11 +50,19 @@ list in build order. Must-haves not done means not shippable, and it says so.
 
 ## Step 2: layout diff
 
-For each key screen, take two screenshots at the **same viewport** (1440x900
-desktop, 390x844 mobile) in the **same state** (same data shape, same tab
-open, logged in the same way). The original's come from public pages or the
-user's own account, saved in `replica/screens/`. The clone's go in
-`replica/clone-screens/`.
+For each key screen, take two screenshots in the **same platform, device,
+orientation and state** (same data shape, same tab open, logged in the same
+way). Web defaults are 1440x900 desktop and 390x844 mobile. Native captures
+use the exact simulator/emulator profiles from `replica/mobile.md`. The
+original's come from public pages or the user's own account, saved in
+`replica/screens/{platform}/{device}/{screen}/{state}.png`; the clone's go in
+the identical tree under `replica/clone-screens/`.
+
+`mobile_capture.py` wraps the official device commands without shell
+redirection: `xcrun simctl io ... screenshot` for iOS and `adb exec-out
+screencap -p` for Android. It refuses to overwrite unless `--force` is set.
+Select a specific simulator UDID or Android serial when more than one is
+running.
 
 ```bash
 python3 ~/.codex/skills/replica-diff/imgdiff.py replica/screens/S07.png replica/clone-screens/S07.png --out replica/diffs/S07.png
@@ -67,6 +78,12 @@ non-retina screenshots compare fine: both are scaled to the same width.
 `--mode pixel` is exact comparison. Use it for your own regressions (clone
 today against clone last week), not against the original.
 
+Generate one JSON result per pair beneath
+`replica/diffs/{platform}/{device}/{screen}/{state}.json`. Never average iOS
+and Android into one opaque number: report each platform, the worst key-screen
+score, and missing pairs. A missing required capture is a failed gate, not a
+zero that can be averaged away.
+
 ## Step 3: behaviour diff
 
 Walk each flow in both apps and compare what the scores cannot see: clicks to
@@ -74,22 +91,30 @@ finish the core flow, what happens on errors, what is remembered between
 visits, what emails arrive. Fewer clicks than the original is a win. Write
 each difference as: flow, original does, clone does, fix or keep.
 
+On mobile include gestures and system back, keyboard movement, permissions,
+system sheets, deep-link cold/warm start, background/resume, offline recovery,
+notifications, safe areas and screen-reader order. Tag every difference
+`ios`, `android`, or `both`.
+
 ## Step 4: the report
 
 `replica/parity.md`: overall score, feature score, layout score per screen,
 missing features in build order, behaviour differences, and a verdict:
 
-- **not shippable**: any must-have missing, or any open S1 bug
-- **shippable**: all must-haves done, feature score 80+, no open S1 or S2
-- **better than the original**: shippable, plus fixes from
-  replica-entrepreneur. This is the goal. A straight copy has no reason to exist.
+- **return to build**: any must-have missing, required capture absent, or a key
+  screen below the agreed layout threshold
+- **ready for E2E**: all must-haves done, feature score 80+, every required
+  capture present, and key screens meet the threshold
+- **release candidate** is not awarded here; it requires `$replica-test`, the
+  differentiation work, rebrand and deploy preflight
 
 Give honest numbers. A clone at 62% is at 62%.
 
 ## Output
 
-`replica/parity.md`, the diff images, and the top five things to build next.
-Then `$replica-build` for the gaps, or `$replica-entrepreneur` if parity is
-there.
+`replica/parity.md`, the diff images/JSON grouped by platform, and the top five
+things to build next. If a must-have or key screen fails, return to
+`$replica-build`, recapture, diff again, and rerun `$replica-test`. Continue to
+`$replica-entrepreneur` only when the gate is green.
 
 Source attribution: [references/origin.md](references/origin.md).

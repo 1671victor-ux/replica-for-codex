@@ -1,4 +1,4 @@
 interface:
   display_name: "Replica Test"
-  short_description: "Test web and mobile flows and report bugs"
-  default_prompt: "Use $replica-test to derive and run web or mobile flow tests for this Replica project."
+  short_description: "Run web, iOS, and Android flow tests"
+  default_prompt: "Use $replica-test to run the Replica project's Maestro flows on iOS and Android and report evidence-backed bugs."
