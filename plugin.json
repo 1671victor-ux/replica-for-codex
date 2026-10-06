@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "replica-for-codex",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Eleven Codex-native skills for a clean-room React Native/Expo mobile replication pipeline with iOS and Android verification.",
   "author": {
     "name": "1671victor-ux",

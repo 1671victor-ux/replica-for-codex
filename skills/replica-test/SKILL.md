@@ -6,8 +6,8 @@ description: >-
   Generates happy paths and edge cases, captures evidence, fixes regressions,
   and reports bugs in a fixed format. Use when the
   user says "test my clone", "find bugs", "QA this", "click through
-  everything", "write e2e tests", "does it work", or after $replica-build or
-  $replica-backend.
+  everything", "write e2e tests", "does it work", or after $replica-diff
+  reports that the clone is ready for E2E.
 ---
 
 # replica-test
@@ -21,7 +21,7 @@ Reads the flows in `replica/recon.md` and the platform contract in
 Run the bundled, read-only environment check before mobile testing:
 
 ```bash
-python3 ~/.codex/skills/replica-test/mobile_doctor.py . --require both
+python3 ~/.codex/skills/replica-test/mobile_doctor.py . --require both --e2e
 ```
 
 ## The rule

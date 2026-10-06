@@ -27,6 +27,12 @@ Claude-only assumptions.
 
 Installed skills become available on the next Codex turn.
 
+## Tutorial
+
+The complete Russian walkthrough is in [TUTORIAL.md](TUTORIAL.md). It follows
+one mobile project from scope and recon through Expo builds, iOS/Android
+screenshots, diff/fix, Maestro E2E, branding, store preparation, and deploy.
+
 ## Mobile-first pipeline
 
 ```text

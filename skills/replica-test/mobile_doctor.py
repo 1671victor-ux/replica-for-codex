@@ -92,6 +92,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("project", nargs="?", default=".")
     parser.add_argument("--require", choices=("none", "ios", "android", "both"), default="none")
+    parser.add_argument("--e2e", action="store_true", help="also require .maestro and the Maestro CLI")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
@@ -119,12 +120,16 @@ def main() -> int:
             failures.append("project:expo-react-native")
         if not report["files"]["app_config"]:
             failures.append("project:app-config")
-        if not report["files"]["maestro"]:
-            failures.append("project:.maestro")
-        for command in ("node", "npx", "maestro"):
+        for command in ("node", "npx"):
             if not report["tools"][command]:
                 failures.append(f"tool:{command}")
+        if args.e2e:
+            if not report["files"]["maestro"]:
+                failures.append("project:.maestro")
+            if not report["tools"]["maestro"]:
+                failures.append("tool:maestro")
     report["required"] = required
+    report["e2e"] = args.e2e
     report["failures"] = failures
 
     if args.json:

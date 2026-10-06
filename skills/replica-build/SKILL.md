@@ -113,6 +113,6 @@ calls. Then build your own version of the behaviour.
 
 Screens built, the feature matrix updated, screenshots saved, and a summary:
 screens done of total, must-haves done of total, what is next. Then
-`$replica-backend` if the data layer is still fake, else `$replica-test`.
+`$replica-backend` if the data layer is still fake, else `$replica-diff`.
 
 Source attribution: [references/origin.md](references/origin.md).
