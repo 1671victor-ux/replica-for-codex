@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replica Diff"
+  short_description: "Score feature and layout parity honestly"
+  default_prompt: "Use $replica-diff to measure feature and layout parity from the Replica artifacts."

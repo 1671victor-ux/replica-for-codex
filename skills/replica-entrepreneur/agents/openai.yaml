@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replica Entrepreneur"
+  short_description: "Turn sourced user complaints into fixes"
+  default_prompt: "Use $replica-entrepreneur to research real public feedback and derive evidence-backed product fixes."

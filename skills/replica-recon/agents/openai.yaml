@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replica Recon"
+  short_description: "Map app screens, flows, and features"
+  default_prompt: "Use $replica-recon to map this app from public sources and my own authorized account."

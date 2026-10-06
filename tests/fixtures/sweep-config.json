@@ -1,0 +1,5 @@
+{
+  "avoid": ["OriginalApp"],
+  "domains": ["original.example"],
+  "colors": ["#006bff"]
+}

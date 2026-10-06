@@ -1,0 +1,4 @@
+source,url,date,rating,text
+app-store,https://example.com/review/1,2026-09-01,1,"The app crashes and support never replied."
+g2,https://example.com/review/2,2026-08-15,2,"It is expensive and I wish it had CSV export."
+reddit,https://example.com/review/3,2026-07-20,,"Please add dark mode and better team permissions."

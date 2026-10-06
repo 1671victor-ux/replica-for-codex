@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replica Test"
+  short_description: "Test web and mobile flows and report bugs"
+  default_prompt: "Use $replica-test to derive and run web or mobile flow tests for this Replica project."

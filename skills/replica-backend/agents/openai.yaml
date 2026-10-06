@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replica Backend"
+  short_description: "Build auth, data, payments, and integrations"
+  default_prompt: "Use $replica-backend to implement the backend from replica/architecture.md using official APIs."

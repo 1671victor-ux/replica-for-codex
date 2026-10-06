@@ -1,0 +1,32 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "replica-for-codex",
+  "version": "0.1.0",
+  "description": "Eleven Codex-native skills for clean-room app research, rebuilding, testing, differentiation, launch, and deployment.",
+  "author": {
+    "name": "1671victor-ux",
+    "url": "https://github.com/1671victor-ux"
+  },
+  "homepage": "https://github.com/1671victor-ux/replica-for-codex",
+  "repository": "https://github.com/1671victor-ux/replica-for-codex",
+  "license": "MIT",
+  "keywords": ["codex", "agent-skills", "app-research", "clean-room", "product-development"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Replica for Codex",
+        "shortDescription": "Clean-room app research and build pipeline",
+        "longDescription": "Eleven coordinated Codex skills that map an existing product, plan and build an original implementation, test parity, research user pain, rebrand, launch, and deploy it.",
+        "developerName": "1671victor-ux",
+        "category": "Developer Tools",
+        "capabilities": ["Read", "Write"],
+        "websiteURL": "https://github.com/1671victor-ux/replica-for-codex",
+        "defaultPrompt": [
+          "Use $replica-recon to map an app from public sources and my own authorized account.",
+          "Continue the Replica for Codex pipeline from the artifacts already present in replica/."
+        ],
+        "brandColor": "#10A37F"
+      }
+    }
+  }
+}

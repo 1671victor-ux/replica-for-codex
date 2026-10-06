@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replica Build"
+  short_description: "Build the clean-room app screen by screen"
+  default_prompt: "Use $replica-build to implement the next vertical slice from the Replica artifacts."

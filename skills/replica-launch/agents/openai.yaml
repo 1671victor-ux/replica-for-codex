@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replica Launch"
+  short_description: "Prepare pricing, landing, and store listings"
+  default_prompt: "Use $replica-launch to prepare evidence-based pricing, landing copy, and store listings."

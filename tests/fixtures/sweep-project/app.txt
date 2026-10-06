@@ -1,0 +1,1 @@
+The OriginalApp button uses #006bff and calls original.example.

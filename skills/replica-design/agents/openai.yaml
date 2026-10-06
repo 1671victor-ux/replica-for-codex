@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replica Design"
+  short_description: "Derive accessible tokens and component specs"
+  default_prompt: "Use $replica-design to build an original, accessible design system from the recon artifacts."

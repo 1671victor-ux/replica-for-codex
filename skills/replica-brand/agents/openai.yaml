@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replica Brand"
+  short_description: "Create an original brand and sweep leftovers"
+  default_prompt: "Use $replica-brand to create an original identity and remove the source app's brand from the project."
